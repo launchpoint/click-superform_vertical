@@ -1,0 +1,17 @@
+%label
+  =se($obj->superform_label_for($field))
+-if(array_key_exists('help', $data))
+  [
+  %span.collapsible_head ?
+  ]
+%br
+=textarea_field($field, 'class', 'expanding')
+-if(array_key_exists('help', $data))
+  .collapsible
+    .help
+      .title
+        =se($field)
+      .body
+        =se($data['help']['body'])
+        %br
+        %img{:src=>magick_img_url('medium', $data['help']['img'])}

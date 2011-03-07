@@ -1,0 +1,6 @@
+%label
+  =se($obj->superform_label_for($field))
+%br
+-$v = trim($obj->$field)
+-if($v!='') $v = date('h:i a', strtotime($v));
+=text_field($field, 'class', 'time_field', 'value', $v)

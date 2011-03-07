@@ -1,0 +1,19 @@
+%label
+  =se($obj->superform_label_for($field))
+%br
+-$items = isset($data['item_array']) ? $data['item_array'] : array()
+-if($items)
+  %table
+    -foreach($items as $att)
+      %tr
+        %td
+          -if($att->is_image && file_exists($att->fpath))
+            %img{:src=>magick_img_url('tiny', $att->vpath), :title=>$att->original_file_name}
+          -elseif(file_exists($att->fpath))
+            %img{:src=>SUPERFORM_VPATH.'/assets/images/document.png', :title=>$att->original_file_name, :width=>"100"}
+          %input{:type=>'hidden', :name=>"{$obj->tableized_klass}[{$field}][current][]", :value=>$att->id}
+        %td{:valign=>"bottom"}
+          %a{:href=>"#", :class=>"btnRemove", :onclick=>"$.get('".delete_attachment_url($att->id)."'); $(this).parent().parent().remove(); return false;"}x
+%div{:id=>"file_inputs"}
+  %input{:type=>'file', :name=>"{$obj->tableized_klass}[{$field}][new][]", :id=>'file_1', :class=>"cloned_input"}
+%a{:href=>"#", :id=>"btnAdd"}Add Another File

@@ -1,0 +1,21 @@
+.section
+  .title
+    =se($obj->superform_label_for($section_name))
+  .instructions
+    =se($obj->superform_label_for($section_name) . " instructions")
+  .body
+    -foreach($fields as $field=>$data)
+      -$id = "id_".uniqid();
+      -$params = array('field'=>$field, 'data'=>$data, 'obj'=>$obj, 'id'=>$id)
+      -if(array_key_exists('item_array', $data) && !is_array($data['item_array']))
+        -$params[$data['item_array']] = $$data['item_array']
+      -event("{$data['type']}_field", $params)
+      -if(array_key_exists($field, $obj->errors))
+        %span{:class=>'error_message'}
+          +$obj->errors[$field]
+      -if(array_key_exists('info_page', $data))
+        ="(".link_to(se("view {$data['info_page']}"), view_page_url($data['info_page']), 'target', '_blank').")";
+      -if(array_key_exists('content_before', $data))
+        =$data['content_before']
+      -if(!in($data['type'], 'hidden'))
+        %br

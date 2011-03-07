@@ -1,0 +1,26 @@
+%label
+  =se($obj->superform_label_for($field))
+%br
+-if ($obj->$field != null)
+  %div{:id=>$id."_current_container"}
+    =hidden_field($field."_id", 'id', $id."_current_value")
+    %img{:src=>magick_img_url('tiny', $obj->$field->vpath), :title=>$obj->$field->original_file_name}
+    %br
+    %button{:id=>$id."_remove"} remove
+    :js
+      $(document).ready( function () {
+        $('#<?=$id?>_remove').click( function() {
+          e = $('#<?=$id?>_current_value');
+          e.val('');
+          $('#<?=$id?>_current_container').hide();
+          $('#<?=$id?>_new_container').show();
+          return false;
+        });
+      });
+-$style = ($obj->$field != null) ? 'display: none' : ''
+%div{:id=>$id.'_new_container', :style=>$style}
+  %br
+  =file_field($field.'_data')
+  %br
+  =se("JPG, TIFF, PNG, GIF accepted. Max 1MB, 255x255 pixels")
+  

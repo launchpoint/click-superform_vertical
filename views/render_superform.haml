@@ -1,0 +1,12 @@
+-if(!$obj->is_valid)
+  .error
+    There are errors that prevented your data from saving.
+=form_for($obj, null, "", false)
+%input{:type=>'hidden', :name=>'superform_cmd', :value=>$obj->superform_cmd}
+-foreach($sections as $section_name=>$fields)
+  -if(!isset($vars)) $vars=array()
+  -if(count($fields)==0) continue
+  -event('superform_section', array_merge(array('section_name'=>$section_name, 'fields'=>$fields, 'obj'=>$obj), $vars))
+  .panel
+    =submit_tag($obj->superform_label_for('Save'));
+=end_form_for()
